@@ -13,10 +13,10 @@ const typeDefs= gql`
       }
 
  type Reaction{
-     _id:ID
-     reactionBody:String
-     username:String
-     createdAt:String
+        _id:ID
+        reactionBody:String
+        username:String
+        createdAt:String
     }
 
  type Thought {
@@ -28,17 +28,25 @@ const typeDefs= gql`
         reactions:[Reaction]
 
     }
-
+ type Auth {
+        token: ID!
+        user: User
+    }
 
  type Query {
-    users: [User]
-    user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(_id: ID!): Thought
+        me: User
+        users: [User]
+        user(username: String!): User
+        thoughts(username: String): [Thought]
+        thought(_id: ID!): Thought
   }
 
- type Mutation{
-     addUser(username:String!,email:String!,password:String!): User
- }
+  type Mutation {
+        login(email: String!, password: String!): Auth
+        addUser(username: String!, email: String!, password: String!): Auth
+        addThought(thoughtText: String!): Thought
+        addReaction(thoughtId: ID!, reactionBody: String!): Thought
+        addFriend(friendId: ID!): User
+  }
 `
 module.exports = typeDefs;
